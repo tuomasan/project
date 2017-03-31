@@ -1,0 +1,59 @@
+<!-- http://localhost:8080/studentinfos.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<title>Student Criteria</title>
+<link rel="stylesheet" href="studentinfos.css">
+</head>
+<body>
+<div class="container"> 
+<form id="concact"  action="" method="post">
+<h3>Student Criteria</h3>
+<fieldset>
+	<input placeholder="Your name" type="text" id="name" tabindex="1" required autofocus><br>
+</fieldset>
+<fieldset>
+	<input placeholder="Email" type="text" id="email" tabindex="2" required><br>
+</fieldset>
+<fieldset>
+	<input placeholder="Mobile" type="text" id="mobile" tabindex="3" required><br>
+</fieldset>
+<fieldset>
+	<input placeholder="Credits" type="text" id="credits" tabindex="4" required><br>
+</fieldset>
+<fieldset>
+	<input placeholder="Average" type="text" id="average" tabindex="5" required><br>
+</fieldset>
+<fieldset>
+	<input type="button" onClick="save()" value="Save">
+</fieldset>
+</form>
+</div>
+<script type="text/javascript">
+function save() {
+	var student = {};		// Luodaan JavaScript-olio, jonka nimeksi annetaan student.
+	student.name = document.getElementById("name").value;
+ 	student.email = document.getElementById("email").value;
+ 	student.mobile = document.getElementById("mobile").value;
+ 	student.credits = document.getElementById("credits").value;
+ 	student.average = document.getElementById("average").value;
+	console.log(student);
+	// Now we send the JSON object to our REST service.
+	
+	$.ajax({
+	    url: '/student',
+	    type: 'post',
+	    dataType: 'json',
+	    contentType: "application/json; charset=utf-8",
+	    success: function (data) {
+	        $('#target').html(data.msg);
+	    },
+	    data: JSON.stringify(student)
+	});
+}
+</script>
+</body>
+</html>

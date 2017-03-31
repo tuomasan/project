@@ -1,0 +1,49 @@
+<!-- http://localhost:8080/studentproject.html -->
+
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="ISO-8859-1">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+<title>Propose a project</title>
+<link rel="stylesheet" href="studentinfos.css">
+</head>
+<body>
+<div class="container"> 
+<form id="concact"  action="" method="post">
+<h3>Propose a project</h3>
+<fieldset>
+	<input placeholder="Company name" type="text" id="company" tabindex="1" required autofocus><br>
+</fieldset>
+<fieldset>
+	<input placeholder="Contact email" type="text" id="email" tabindex="2" required><br>
+</fieldset>
+<fieldset>
+      <textarea placeholder="Type your message here...." id="description" tabindex="3" required></textarea>
+</fieldset>
+<input type="button" onClick="save()" value="Add">
+</form>
+</div>
+<script type="text/javascript">
+function save() {
+	var project = {};		// Luodaan JavaScript-olio, jonka nimeksi annetaan project.
+	project.company = document.getElementById("company").value;
+ 	project.email = document.getElementById("email").value;
+	project.description = document.getElementById("description").value;
+	console.log(project);
+	// Now we send the JSON object to our REST service.
+	
+	$.ajax({
+	    url: '/project',
+	    type: 'post',
+	    dataType: 'json',
+	    contentType: "application/json; charset=utf-8",
+	    success: function (data) {
+	        $('#target').html(data.msg);
+	    },
+	    data: JSON.stringify(project)
+	});
+}
+</script>
+</body>
+</html>
